@@ -1,0 +1,22 @@
+# Put your custom commands here that should be executed once
+# the system init finished. By default this file does nothing.
+
+# 1-Wire-Bus aktivieren (# entfernen)
+insmod i2c-gpio-custom bus0=0,18,19
+
+# Register I2C 1Wire busmaster
+echo ds2482 0x18 > /sys/bus/i2c/devices/i2c-0/new_device
+
+# Register I2C RTC
+echo ds1307 0x68 > /sys/bus/i2c/devices/i2c-0/new_device
+
+# GPIOs exportieren und Datenrichtung einstellen
+# wenn 1wire aktiviert ist, muss GPIO18 und 19 mit # versehen werden
+#echo 18 > /sys/class/gpio/export
+#echo 19 > /sys/class/gpio/export
+echo 22 > /sys/class/gpio/export
+echo 23 > /sys/class/gpio/export
+echo out > /sys/class/gpio/gpio22/direction
+echo out > /sys/class/gpio/gpio23/direction
+
+exit 0
